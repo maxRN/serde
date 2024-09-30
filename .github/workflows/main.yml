@@ -47,7 +47,7 @@ jobs:
           allow-prerelease-opam: ${{ matrix.allow-prerelease-opam }}
           opam-repositories: ${{ matrix.opam-repositories }}
 
-      - run: opam install . --deps-only --with-test
+      - run: opam install ./serde.opam ./serde_derive.opam --deps-only --with-test
 
       - run: opam exec -- dune build
 
