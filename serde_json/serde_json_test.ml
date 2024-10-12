@@ -540,6 +540,21 @@ let _serde_json_parse_test_list_of_records_with_space =
         (error "Failed!");
       assert false
 
+let _serde_json_parse_test_list_of_records_with_new_line =
+  let str =
+    {| { "records": [ { "hello": "two elements: one"\n} , { "hello": "two elements: two" \n\r}] } |}
+  in
+  let parsed = Serde_json.of_string deserialize_list_of_record str in
+  match parsed with
+  | Ok parsed ->
+      let _ = (List.hd parsed.records).hello in
+      Format.printf "serde_json.ser/de test %S %s\r\n%!" "parsed with no key"
+        (keyword "OK")
+  | Error _ ->
+      Format.printf "serde_json.ser/de test %S %s\r\n%!" "parsed with no key"
+        (error "Failed!");
+      assert false
+
 type with_default = {
   greeting : string;
   count_with_default : int; [@serde { default = 5 }]
